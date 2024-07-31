@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Dashboard</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href={% static 'base/css/main.css' %}/>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+  </head>
+  {% if user.is_authenticated %}
+  <body>
+    <header style="height: 100vh">
+      <div class="menu-show m-2 d-none h-20">
+        <i class="fas fa-bars" id="menu-showing"></i>
+      </div>
+
+      <nav class="m-0 navegation" style="height: 100%">
+        <div class="b-example-divider"></div>
+        <div
+          class="flex-shrink-0 p-3 bg-dark text-center h-100 m-0"
+          style="width: 300px"
+        >
+          <div class="cabecalho d-flex justify-content-around">
+            <a
+              href="{% url 'dashboard' %}"
+              class="d-flex align-items-center pb-3 mb-3 link-light text-decoration-none border-bottom"
+            >
+              <svg class="bi me-2" width="30" height="24">
+                <use xlink:href="#bootstrap" />
+              </svg>
+              <h3><span>DASHBOARD</span></h3>
+            </a>
+            <button
+              type="button"
+              class="btn-close color-light"
+              aria-label="Close"
+            ></button>
+          </div>
+          <ul class="list-unstyled ps-0">
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#home-collapse"
+                aria-expanded="true"
+              >
+                Administrativo
+              </button>
+              <div class="collapse" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li>
+                    <a href="{% url 'Funcionarios' %}" class="link-light rounded">Funcionários</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#dashboard-collapse"
+                aria-expanded="false"
+              >
+                Controle Funcionários
+              </button>
+              <div class="collapse" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li><a href="#" class="link-light rounded">Faltas</a></li>
+                  <li><a href="#" class="link-light rounded">Atrasos</a></li>
+                  <li>
+                    <a href="#" class="link-light rounded">Advertências</a>
+                  </li>
+                  <li><a href="#" class="link-light rounded">Atestados</a></li>
+                  <li>
+                    <a href="#" class="link-light rounded">Horas Extras</a>
+                  </li>
+                  <li><a href="#" class="link-light rounded">Férias</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#orders-collapse"
+                aria-expanded="false"
+              >
+                Demissões
+              </button>
+              <div class="collapse" id="orders-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li>
+                    <a href="#" class="link-light rounded">Avisos Prévios</a>
+                  </li>
+                  <li><a href="#" class="link-light rounded">Suspensões</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="border-top my-3"></li>
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#account-collapse"
+                aria-expanded="false"
+              >
+                Conta
+              </button>
+              <div class="collapse" id="account-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li><a href="#" class="link-light rounded">Perfil</a></li>
+                  <li><a href="{% url 'Logout' %}" class="link-light rounded">Sair</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main class="w-100 flex-wrap">
+      {% block content %}
+      <section class="d-flex w-100 cards-manager">
+        <div class="card-funcionario shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+            />
+          </svg>
+
+          <h5>TOTAL DE FUNCIONARIOS</h5>
+          <h3><span>120</span></h3>
+        </div>
+        <div class="card-faltas shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+
+          <h5>TOTAL DE FALTAS</h5>
+          <h3><span>120</span></h3>
+        </div>
+        <div class="card-atrasos shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+
+          <h5>TOTAL DE ATRASOS</h5>
+          <h3><span>120</span></h3>
+        </div>
+
+        <div class="card-atestados shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"
+            />
+          </svg>
+
+          <h5>TOTAL DE ATESTADOS</h5>
+          <h3><span>120</span></h3>
+        </div>
+
+        <div class="card-avisos shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+            />
+          </svg>
+
+          <h5>FUNCIONÁRIOS DE AVISO</h5>
+          <h3><span>120</span></h3>
+        </div>
+
+        <div class="card-advertencias shadow cards">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.0"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+
+          <h5>TOTAL DE ADVERTÊNCIAS</h5>
+          <h3><span>120</span></h3>
+        </div>
+      </section>
+      {% endblock  %}
+    </main>
+    <footer></footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script src={% static 'base/js/main.js' %}></script>
+    {% block scripts %}{% endblock  %}
+  </body>
+  {% endif %}
+</html>
