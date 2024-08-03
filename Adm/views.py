@@ -1,12 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib import messages
+from .models import *
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
-def Funcionarios(request):
-    return render(request, 'Adm/funcionarios/funcionarios.html')
+@login_required(login_url='Login')
+def Funcionario(request):
+    model = Funcionarios.objects.all()
+    context = {'model': model}
+    return render(request, 'Adm/funcionarios/funcionarios.html', context)
 
-
+@login_required(login_url='Login')
 def CadastrarFuncionario(request):
     if request.method == 'GET':
       funcionariosForms = FuncionariosForm()
@@ -22,5 +28,12 @@ def CadastrarFuncionario(request):
             funcionariosForms.save()
             sucesso = f'Funcionário foi cadastrado com sucesso.'
             messages.success(request, sucesso)
-            return render(request, 'Adm/funcionarios/funcionarios.html')
+            return redirect(Funcionario)
     return render(request, 'Adm/funcionarios/funcionarios.html', context)
+
+
+@login_required(login_url='Login')
+def DeletarFuncionario(request, id):
+    model = Funcionarios.objects.get(id=id)
+    model.delete()
+    return redirect(Funcionario)

@@ -3,53 +3,15 @@
 
 {% block content %}
  
-<div class="d-flex flex-column justify-content-center align-items-center h-100 gap-4">
+<div class="d-flex flex-column justify-content-center align-items-center h-100 gap-4 p-5">
     <div class="new-search d-flex align-items-center gap-2">
        <span>Cadastrar Funcionários</span><a data-bs-toggle="modal" data-bs-target="#cadastrar-novo" href="#" class="btn btn-outline-success" id="cadastrar"
        hx-get="{% url 'cadastrarFuncionarios' %}" hx-target="#cadastrar-funcionario" hx-swap="innerHTML">Cadastrar</a>
        <span>Buscar Funcionário</span><input type="text" class="form-control w-50"> 
     </div>
-    <table class="table table-hover w-75 align-items-center">
-        <thead>
-        <tr >
-            <th scope="col" class="bg-primary">#</th>
-            <th scope="col" class="bg-primary">First</th>
-            <th scope="col" class="bg-primary">Last</th>
-            <th scope="col" class="bg-primary">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
+    
+    {% include "Adm/funcionarios/ListarFuncionarios.html" %}
+    
 </div>
 
 

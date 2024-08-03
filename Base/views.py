@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate,login,logout
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from Adm.models import Funcionarios
+from django.db.models import Count, Sum
 
 def Login(request):
     if request.method == 'GET':
@@ -29,7 +31,9 @@ def Login(request):
   
 @login_required(login_url='Login')       
 def Dashboard(request):
-    return render(request,'dashboard/base.html')
+    model = Funcionarios.objects.all().aggregate(cont_funcionario = Count('id'))['cont_funcionario']
+    context = { 'model': model}
+    return render(request,'dashboard/base.html', context)
 
 def Logout_User(request):
     logout(request)

@@ -20,11 +20,14 @@ class Funcionarios(models.Model):
     unidade = models.ForeignKey(Unidades,related_name='Unidades', on_delete=models.CASCADE)
     criado = models.DateField(auto_now_add=True)
     
+    
     class Meta:
         db_table= 'Funcionários'
         verbose_name = 'Funcionário'
         verbose_name_plural = 'Funcionários'
         
+    
+    
     def __str__(self):
         return self.nome
     

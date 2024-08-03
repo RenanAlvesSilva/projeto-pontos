@@ -1,4 +1,4 @@
-$(".btn-close").click(()=>{
+$("#btn-close").click(()=>{
     $(".navegation").fadeOut()
     $(".menu-show").removeClass("d-none")
     $(".cards-manager").css("grid-template-columns","'0fr' '1fr'" )
