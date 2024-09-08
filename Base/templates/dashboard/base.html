@@ -22,6 +22,7 @@
       referrerpolicy="no-referrer"
     ></script>
     <link rel="stylesheet" href={% static 'base/css/main.css' %}/>
+    {% block styles %}{% endblock  %}
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -31,17 +32,19 @@
     <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
   </head>
   {% if user.is_authenticated %}
-  <body>
+  
+  <body id="my-grid">
+  
     <header style="height: 100vh">
       <div class="menu-show m-2 d-none h-20">
         <i class="fas fa-bars" id="menu-showing"></i>
       </div>
-
-      <nav class="m-0 navegation" style="height: 100%">
-        <div class="b-example-divider"></div>
+      
+      <nav id="sidebar" class="m-0 navegation" style="height: 100%">
+        
         <div
-          class="flex-shrink-0 p-3 bg-dark text-center h-100 m-0"
-          style="width: 300px"
+          class="flex-shrink-0 p-3 bg-dark text-center h-100 m-0 col-0"
+          style="width: 300px" id="side-content"
         >
           <div class="cabecalho d-flex justify-content-around">
             <a
@@ -59,13 +62,15 @@
               aria-label="Close" id="btn-close"
             ></button>
           </div>
+          
           <ul class="list-unstyled ps-0">
+            {% if is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
                 data-bs-toggle="collapse"
                 data-bs-target="#home-collapse"
-                aria-expanded="true"
+                aria-expanded="false"
               >
                 Administrativo
               </button>
@@ -77,6 +82,8 @@
                 </ul>
               </div>
             </li>
+            {% endif %}
+            {% if is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -88,7 +95,7 @@
               </button>
               <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-light rounded">Faltas</a></li>
+                  <li><a href="{% url "Faltas" %}" class="link-light rounded">Faltas</a></li>
                   <li><a href="#" class="link-light rounded">Atrasos</a></li>
                   <li>
                     <a href="#" class="link-light rounded">Advertências</a>
@@ -101,6 +108,8 @@
                 </ul>
               </div>
             </li>
+            {% endif %}
+            {% if is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -119,6 +128,52 @@
                 </ul>
               </div>
             </li>
+            {% endif %}
+            {% if is_gerencia %}
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#orders-ponto"
+                aria-expanded="false"
+              >
+                Pontos
+              </button>
+              <div class="collapse" id="orders-ponto">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li>
+                    <a href="{% url "ListarPontos" %}" class="link-light rounded">Pontos de Entrada</a>
+                  </li>
+                  <li><a href="#" class="link-light rounded">Ponto Saída</a></li>
+                </ul>
+              </div>
+            </li>
+            {% endif %}
+           {% if is_operador %}
+            <li class="mb-1">
+              <button
+                class="btn btn-toggle align-items-center rounded collapsed link-light"
+                data-bs-toggle="collapse"
+                data-bs-target="#orders-area-funcionarios"
+                aria-expanded="false"
+              >
+                Área de Funcionário
+              </button>
+              <div class="collapse" id="orders-area-funcionarios">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <li>
+                    <a href="{% url "listar_meuspontos_entrada" %}" class="link-light rounded">Meus Pontos</a>
+                  </li>
+                  <li>
+                    <a href="{% url "ponto_view" %}" class="link-light rounded">Ponto Entrada</a>
+                  </li>
+                  <li>
+                    <a href="{% url "ponto_saida" %}" class="link-light rounded">Ponto Saída</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            {% endif %}
             <li class="border-top my-3"></li>
             <li class="mb-1">
               <button
@@ -140,10 +195,12 @@
         </div>
       </nav>
     </header>
-
+   
     <main class="w-100 flex-wrap">
-      {% block content %}
-      <section class="d-flex w-100 cards-manager">
+    {% block content %}
+    {% endblock  %}
+    {% if is_gerencia %}
+      <section id="section-cards" class="d-flex h-100 w-100 cards-manager">
         <div class="card-funcionario shadow cards">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +238,7 @@
           </svg>
 
           <h5>TOTAL DE FALTAS</h5>
-          <h3><span>120</span></h3>
+          <h3><span>{{faltas}}</span></h3>
         </div>
         <div class="card-atrasos shadow cards">
           <svg
@@ -263,8 +320,9 @@
           <h3><span>120</span></h3>
         </div>
       </section>
-      {% endblock  %}
+      {% endif %}
     </main>
+    
     <footer></footer>
 
     <script
@@ -281,5 +339,6 @@
     <script src={% static 'base/js/main.js' %}></script>
     {% block scripts %}{% endblock  %}
   </body>
+  
   {% endif %}
 </html>

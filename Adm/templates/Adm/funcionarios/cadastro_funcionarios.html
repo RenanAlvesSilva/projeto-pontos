@@ -4,11 +4,11 @@
 {% block content %}
 
 <div class="container w-100 h-100 d-flex align-items-center justify-content-center">
-    <div class="container-forms w-100 d-flex justify-content-center bg-info rounded">
-        <form class="w-100 text-light p-3" action="{% url "cadastrarFuncionarios" %}" method="post">{% csrf_token %}
+    <div class="container-forms w-100 d-flex justify-content-center shadow">
+        <form class="w-100 p-3" action="{% url "cadastrarFuncionarios" %}" method="post">{% csrf_token %}
             <div class="content-forms d-flex flex-column">
                 {{funcionariosForms.as_p}}
-                <button class="btn btn-success" href="{% url "cadastrarFuncionarios" %}" type="submit">Cadastrar</button>
+                <button class="btn btn-primary" href="{% url "cadastrarFuncionarios" %}" type="submit">Cadastrar</button>
             </div>
         </form>
     </div>

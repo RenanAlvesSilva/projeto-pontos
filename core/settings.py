@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
+import pytz
+from django.conf.locale.pt_BR import formats as br_formats
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,13 +24,14 @@ DJANGO_APPS = [
 
 #APS DE TERCEIROS
 THIRD_PARTY_APPS = [
-    
+    'django_filters',
 ]
 
 #Meus Apps
 MY_APPS = [
     'Base',
-    'Adm'
+    'Adm',
+    'Controle'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -86,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+HORA_CORRETA = pytz.timezone('America/Sao_Paulo')
 
 LANGUAGE_CODE = 'pt-br'
 
@@ -95,6 +98,9 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 
 USE_TZ = True
+
+br_formats.DATE_FORMAT = 'd/m/Y'
+br_formats.TIME_FORMAT = 'H:i:s'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -112,5 +118,5 @@ MESSAGES_TAGS = {
     messages.INFO: 'info',
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
-    messages.ERROR: 'denger',
+    messages.ERROR: 'danger',
 }

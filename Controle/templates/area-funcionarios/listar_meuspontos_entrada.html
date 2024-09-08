@@ -1,0 +1,28 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container h-100 pt-5">
+<table class="table table-hover w-100 align-items-center w-25">
+    <thead>
+    <tr>
+        <th scope="col" class="bg-primary text-center text-light">Nome</th>
+        <th scope="col" class="bg-primary text-center text-light">Data</th>
+        <th scope="col" class="bg-primary text-center text-light">Hora</th>
+        
+    </thead>
+    <tbody>
+    {% for entrada in entrada %}
+        <tr>
+            <th scope="row"><a class="text-decoration-none" href="#">{{entrada.usuario.funcionario}}</a></th>
+            <td class="text-center">{{entrada.data}}</td>
+            <td class="text-center">{{entrada.horario}}</td>
+        </tr>
+        {% empty %}
+        <p>Não há dados a serem exibidos</p>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endblock %}

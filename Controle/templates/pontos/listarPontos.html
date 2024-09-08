@@ -1,0 +1,89 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center h-100">
+    {% include "avisos/_aviso.html" %}
+<table class="table table-hover w-100 align-items-center">
+    <thead>
+    <tr>
+        <th scope="col" class="bg-primary text-center text-light">Nome</th>
+        <th scope="col" class="bg-primary text-center text-light">Unidade</th>
+        <th scope="col" class="bg-primary text-center text-light">Data</th>
+        <th scope="col" class="bg-primary text-center text-light">Hora</th>
+        <th scope="col" class="bg-primary text-center text-light">Endereço</th>
+        <th scope="col" class="bg-primary text-center text-light"></th>
+        
+    </thead>
+    <tbody>
+    {% for model in PaginarPontos %}
+        <tr>
+            <th scope="row"><a class="text-decoration-none" href="#">{{model.usuario.funcionario}}</a></th>
+            <td class="text-center">{{model.unidade | default:"--"}}</td>
+            <td class="text-center">{{model.data}}</td>
+            <td class="text-center">{{model.horario}}</td>
+            <td class="text-center">{{model.endereco}}</td>
+            <td><a href="{% url "deletar_ponto" model.id %}"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
+        </tr>
+        {% empty %}
+        <p>Não há dados a serem exibidos</p>
+    {% endfor %}
+</tbody>
+</table>
+<ul class="pagination justify-content-center">
+    <!-- Link para a página anterior -->
+    {% if PaginarPontos.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ PaginarPontos.previous_page_number }}">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </span>
+        </li>
+    {% endif %}
+    
+    <!-- Mostrar "..." se houver páginas anteriores ao alcance visível -->
+    {% if PaginarPontos.number|add:'-3' > 1 %}
+        <li class="page-item"><a class="page-link" href="?page=1">&hellip;</a></li>
+    {% endif %}
+    
+    <!-- Páginas numeradas -->
+    {% for page in PaginarPontos.paginator.page_range %}
+        {% if page == PaginarPontos.number %}
+            <li class="page-item active">
+                <span class="page-link">
+                    {{ page }} <span class="sr-only">(current)</span>
+                </span>
+            </li>
+        {% elif page >= PaginarPontos.number|add:'-3' and page <= PaginarPontos.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    
+    <!-- Mostrar "..." se houver páginas seguintes ao alcance visível -->
+    {% if PaginarPontos.paginator.num_pages > PaginarFaltas.number|add:'3' %}
+        <li class="page-item"><a class="page-link" href="?page={{ PaginarPontos.paginator.num_pages }}">&hellip;</a></li>
+    {% endif %}
+    
+    <!-- Link para a próxima página -->
+    {% if PaginarPontos.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ PaginarPontos.next_page_number }}">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </span>
+        </li>
+    {% endif %}
+</ul>
+</div>
+{% endblock  %}

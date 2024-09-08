@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .cards{
     height: 150px;
     width: 300px;
@@ -29,14 +34,15 @@
 }
 body{
     display: grid;
-    grid-template-areas: 'l r' 'f f ';
-    grid-template-columns: 0fr 1fr;
-    grid-template-rows: 4fr 1fr;
+    grid-template-areas: 'l r' 'l r ';
+    grid-template-columns: 0fr 4fr;
+    grid-template-rows: 4fr 4fr;
     width: 100vw;
     height: 100vh;
     padding: 0;
     margin: 0;
     background-color: #e2e2e2;
+    gap: 30px;
 }
 .cards-manager{
     display: flex;
@@ -45,7 +51,6 @@ body{
     margin-right: 30px;
     gap: 10px;
     justify-content: space-around;
-    margin-top: 20px;
     grid-area: r;
 }
 .card-funcionario{
@@ -83,7 +88,29 @@ body{
 .navegation{
     grid-area: l;
 }
-footer{
-    grid-area: f;
-    width: 100wv;
+
+
+
+
+
+@media (width <= 768px){
+    #sidebar{
+        height: 100dvh;
+    }
+    #side-content{
+        z-index: 1;
+    }
+    header{
+        height: 100dvh;
+    }
+    main{
+        overflow-y: auto;
+    }
+    body{
+        grid-template-columns: 0fr 3fr;
+    }
+    section{
+        padding-right: 30px;
+    }
 }
+
