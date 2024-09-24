@@ -64,7 +64,7 @@
           </div>
           
           <ul class="list-unstyled ps-0">
-            {% if is_gerencia %}
+            {% if request.is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -83,7 +83,7 @@
               </div>
             </li>
             {% endif %}
-            {% if is_gerencia %}
+            {% if request.is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -96,7 +96,7 @@
               <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                   <li><a href="{% url "Faltas" %}" class="link-light rounded">Faltas</a></li>
-                  <li><a href="#" class="link-light rounded">Atrasos</a></li>
+                  <li><a href="{% url "ControleAtrasos" %}" class="link-light rounded">Atrasos</a></li>
                   <li>
                     <a href="#" class="link-light rounded">Advertências</a>
                   </li>
@@ -109,7 +109,7 @@
               </div>
             </li>
             {% endif %}
-            {% if is_gerencia %}
+            {% if request.is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -129,7 +129,7 @@
               </div>
             </li>
             {% endif %}
-            {% if is_gerencia %}
+            {% if request.is_gerencia %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -144,12 +144,12 @@
                   <li>
                     <a href="{% url "ListarPontos" %}" class="link-light rounded">Pontos de Entrada</a>
                   </li>
-                  <li><a href="#" class="link-light rounded">Ponto Saída</a></li>
+                  <li><a href="{% url "ListarSaida" %}" class="link-light rounded">Ponto Saída</a></li>
                 </ul>
               </div>
             </li>
             {% endif %}
-           {% if is_operador %}
+           {% if request.is_operador %}
             <li class="mb-1">
               <button
                 class="btn btn-toggle align-items-center rounded collapsed link-light"
@@ -196,9 +196,12 @@
       </nav>
     </header>
    
-    <main class="w-100 flex-wrap">
-    {% block content %}
-    {% endblock  %}
+    <main class="w-100 flex-wrap d-flex justify-content-center align-items-center">
+    <div id="main-content_" class="container">
+      
+      {% block content %}
+
+      {% endblock  %}
     {% if is_gerencia %}
       <section id="section-cards" class="d-flex h-100 w-100 cards-manager">
         <div class="card-funcionario shadow cards">
@@ -257,7 +260,7 @@
           </svg>
 
           <h5>TOTAL DE ATRASOS</h5>
-          <h3><span>120</span></h3>
+          <h3><span>{{atrasos}}</span></h3>
         </div>
 
         <div class="card-atestados shadow cards">
@@ -321,6 +324,7 @@
         </div>
       </section>
       {% endif %}
+    </div>
     </main>
     
     <footer></footer>

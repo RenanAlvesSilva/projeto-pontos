@@ -12,7 +12,7 @@
                     <div class="d-flex">
                         <div class="">{{FiltersPontos.form.data_inicio}}</div>
                         <div class="">{{FiltersPontos.form.data_fim}}</div>
-                     </div>
+                    </div>
                 </div>
                 <div>
                     <p class="text-center bg-primary text-light rounded">Pesquisar por Unidade</p>
@@ -41,7 +41,7 @@
             <td class="text-center">{{model.data}}</td>
             <td class="text-center">{{model.horario}}</td>
             <td class="text-center">{{model.endereco}}</td>
-            <td><a href="{% url "deletar_ponto" model.id %}"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
+            <td><a href="{% url "Deletar_PontoSaida" model.id %}"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
         </tr>
         {% empty %}
         <p>Não há dados a serem exibidos</p>

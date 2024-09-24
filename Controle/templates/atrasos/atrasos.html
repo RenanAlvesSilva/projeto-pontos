@@ -7,23 +7,23 @@
     
     {% include "avisos/_aviso.html" %}
     <div class="new-search d-flex align-items-center flex-column gap-2 h-100 w-100">
-        <a data-bs-toggle="modal" data-bs-target="#cadastrar-faltas" href="#" class="btn btn-outline-primary"
-        hx-get="{% url "CadastroFaltas" %}" hx-target="#cadastrofaltas" hx-swap="innerHTML">Cadastrar Falta <i id="add" class="fas fa-user-plus" style="color: #f5faf4;"></i></a>
+        <a data-bs-toggle="modal" data-bs-target="#cadastrar-atrasos" href="#" class="btn btn-outline-primary"
+        hx-get="{% url "CadastroAtrasos" %}" hx-target="#cadastroatrasos" hx-swap="innerHTML">Cadastrar Atrasos <i id="add" class="fas fa-user-plus" style="color: #f5faf4;"></i></a>
         
         <form method="get" class="d-flex row w-100 gap-1 justify-content-center">
             <div class="d-flex column justify-content-center align-items-center" >
                
                 <div class="filters">
                     <span class="bg-primary text-light rounded m-2 p-1">Filtrar por Unidade:</span>
-                    {{FiltersFalta.form.unidade}}
+                    {{AtrasosFilter.form.unidade}}
                 </div>
            
             
                 <div class="d-flex flex-column justify-content-center align-items-center m-2">
                     <span class="label-data bg-primary text-light rounded m-2 p-1">Filtrar Por Data: Início / Fim</span>
                     <div class="filter-data">
-                        {{FiltersFalta.form.data_inicio_gte}}
-                        {{FiltersFalta.form.data_fim_lte}}
+                        {{AtrasosFilter.form.data_inicio_gte}}
+                        {{AtrasosFilter.form.data_fim_lte}}
                     </div>
                 </div>
                 <button id="btn-filter" class="btn btn-outline-primary m-3" type="submit">Pesquisar</button>
@@ -33,10 +33,10 @@
     </div>
     
 </div>
-{% include "faltas/listarfaltas.html" %}
+{% include "atrasos/listaratrasos.html" %}
 
 
-{% include "modalControle/modalfaltas.html" %}
+{% include "modalControle/modalatrasos.html" %}
 {% endblock  %}
 
 {% block scripts %} <script src="{% static 'controle/js/controle.js' %}"></script> {% endblock  %}

@@ -3,23 +3,39 @@
 {% block content %}
 
 <div class="container h-100 pt-5">
+    <div>
+        <form action="" method="get" class="d-flex column justify-content-center align-items-center gap-3 mb-3">
+           
+            <div class="d-flex column gap-3">
+                <div class="">
+                    <p class="text-center bg-primary text-light rounded">Pesquisar por Data</p>
+                    <div class="d-inline-block">{{ponto_entrada_filter.form.data_inicio}}</div>
+                    <div class="d-inline-block">{{ponto_entrada_filter.form.data_fim}}</div>
+
+                </div>
+            </div>
+                <button class="btn btn-outline-primary">Pesquisar</button>
+        </form>
+    </div>
 <table class="table table-hover w-100 align-items-center w-25">
     <thead>
     <tr>
-        <th scope="col" class="bg-primary text-center text-light">Nome</th>
-        <th scope="col" class="bg-primary text-center text-light">Data</th>
-        <th scope="col" class="bg-primary text-center text-light">Hora</th>
+        <th scope="col" class="bg-primary text-center text-light">PONTOS</th>
+        <th scope="col" class="bg-primary text-center text-light">NOME</th>
+        <th scope="col" class="bg-primary text-center text-light">DATA</th>
+        <th scope="col" class="bg-primary text-center text-light">HORA</th>
         
     </thead>
     <tbody>
-    {% for entrada in entrada %}
+    {% for pontos in pontos %}
         <tr>
-            <th scope="row"><a class="text-decoration-none" href="#">{{entrada.usuario.funcionario}}</a></th>
-            <td class="text-center">{{entrada.data}}</td>
-            <td class="text-center">{{entrada.horario}}</td>
+            <td class="text-center">{{pontos.tipo}}</td>
+            <th scope="row" class="text-center"><a class="text-decoration-none" href="#">{{pontos.ponto.usuario.nome}}</a></th>
+            <td class="text-center">{{pontos.ponto.data}}</td>
+            <td class="text-center">{{pontos.ponto.horario}}</td>
         </tr>
         {% empty %}
-        <p>Não há dados a serem exibidos</p>
+        <p class="text-danger">Não há dados a serem exibidos</p>
     {% endfor %}
 </tbody>
 </table>

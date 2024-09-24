@@ -1,18 +1,20 @@
 <table class="table table-hover w-100 align-items-center">
     <thead>
     <tr>
-        <th scope="col" class="bg-primary text-center text-light">Nome</th>
-        <th scope="col" class="bg-primary text-center text-light">Unidade</th>
-        <th scope="col" class="bg-primary text-center text-light">Data</th>
+        <th scope="col" class="bg-primary text-center text-light">NOME</th>
+        <th scope="col" class="bg-primary text-center text-light">UNIDADE</th>
+        <th scope="col" class="bg-primary text-center text-light">ATRASOS</th>
+        <th scope="col" class="bg-primary text-center text-light">DATA</th>
         <th scope="col" class="bg-primary text-center text-light"></th>
     </thead>
     <tbody>
-    {% for model in PaginarFaltas %}
+    {% for model in AtrasosPaginator %}
         <tr>
-            <th scope="row" class="text-center"><a class="text-decoration-none" href="#">{{model.falta}}</a></th>
-            <td class="text-center">{{model.falta.unidade.name_unidade}}</td>
+            <th scope="row" class="text-center"><a class="text-decoration-none" href="#">{{model.funcionarios}}</a></th>
+            <td class="text-center">{{model.funcionarios.unidade.name_unidade}}</td>
+            <td class="text-center">{{model.converter_atrasos}}</td>
             <td class="text-center">{{model.data}}</td>
-            <td><a href="{% url "DeletarFaltas" model.id %}"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
+            <td><a href="#"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
         </tr>
         {% empty %}
         <p class="text-danger">Não há dados a serem exibidos</p>
@@ -36,19 +38,19 @@
     {% endif %}
     
     <!-- Mostrar "..." se houver páginas anteriores ao alcance visível -->
-    {% if PaginarFaltas.number|add:'-3' > 1 %}
+    {% if AtrasosPaginator.number|add:'-3' > 1 %}
         <li class="page-item"><a class="page-link" href="?page=1">&hellip;</a></li>
     {% endif %}
     
     <!-- Páginas numeradas -->
-    {% for page in PaginarFaltas.paginator.page_range %}
-        {% if page == PaginarFaltas.number %}
+    {% for page in AtrasosPaginator.paginator.page_range %}
+        {% if page == AtrasosPaginator.number %}
             <li class="page-item active">
                 <span class="page-link">
                     {{ page }} <span class="sr-only">(current)</span>
                 </span>
             </li>
-        {% elif page >= PaginarFaltas.number|add:'-3' and page <= PaginarFaltas.number|add:'3' %}
+        {% elif page >= AtrasosPaginator.number|add:'-3' and page <= AtrasosPaginator.number|add:'3' %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ page }}">{{ page }}</a>
             </li>
@@ -56,14 +58,14 @@
     {% endfor %}
     
     <!-- Mostrar "..." se houver páginas seguintes ao alcance visível -->
-    {% if PaginarFaltas.paginator.num_pages > PaginarFaltas.number|add:'3' %}
-        <li class="page-item"><a class="page-link" href="?page={{ PaginarFaltas.paginator.num_pages }}">&hellip;</a></li>
+    {% if AtrasosPaginator.paginator.num_pages > AtrasosPaginator.number|add:'3' %}
+        <li class="page-item"><a class="page-link" href="?page={{ AtrasosPaginator.paginator.num_pages }}">&hellip;</a></li>
     {% endif %}
     
     <!-- Link para a próxima página -->
-    {% if PaginarFaltas.has_next %}
+    {% if AtrasosPaginator.has_next %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ PaginarFaltas.next_page_number }}">
+            <a class="page-link" href="?page={{ AtrasosPaginator.next_page_number }}">
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
         </li>

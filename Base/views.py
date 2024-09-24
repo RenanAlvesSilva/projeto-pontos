@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Adm.models import Funcionarios
 from django.db.models import Count
-from Controle.models import Faltas
-
+from Controle.models import Faltas, Atrasos
+from django.contrib.auth.models import Group
 
 def Login(request):
     if request.method == 'GET':
@@ -35,10 +35,14 @@ def Login(request):
 def Dashboard(request):
     model = Funcionarios.objects.all().aggregate(cont_funcionario = Count('id'))['cont_funcionario']
     faltas = Faltas.objects.all().aggregate(cont_faltas = Count('id'))['cont_faltas']
+    atrasos = Atrasos.objects.all().aggregate(cont_funcionarios = Count('id'))['cont_funcionarios']
+    usuario = request.user
     context = {'model': model,
                'faltas': faltas,
-               'is_operador': request.user.groups.filter(name='Operador').exists(),
-               'is_gerencia': request.user.groups.filter(name='Gerencia').exists(),
+               'atrasos': atrasos,
+               'is_operador': usuario.groups.filter(name='Operador').exists(),
+               'is_gerencia': usuario.groups.filter(name='Gerencia').exists(),
+               'is_fiscal': usuario.groups.filter(name='Fiscal').exists(),
                }
     return render(request,'dashboard/base.html', context)
 

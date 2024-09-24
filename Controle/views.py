@@ -17,7 +17,7 @@ import datetime
 
 @login_required(login_url='Login')
 def ControleFaltas(request):
-    model = Faltas.objects.all()
+    model = Faltas.objects.select_related('falta__unidade').all()
     FiltersFalta = FilterFaltas(request.GET, queryset= model)
     if FiltersFalta.is_valid():
         queryset = FiltersFalta.qs
@@ -74,11 +74,11 @@ def receive_location(request):
             geocode_url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&language=pt-BR&key={GOOGLE_MAPS_API_KEY}'
             response = requests.get(geocode_url)
             result = response.json()
-
+            funcionario = get_object_or_404(Funcionarios, usuario=request.user)
             if result.get('status') == 'OK':
                 # Obtenha o endereço formatado
                 address = result['results'][0]['formatted_address']
-                model = PontoEntrada.objects.create(endereco=address, data=datetime.datetime.now(), horario=timezone.localtime(), usuario=request.user)
+                model = PontoEntrada.objects.create(endereco=address, data=datetime.datetime.now(), horario=timezone.localtime(), usuario=funcionario)
                 return JsonResponse({'status': 'success'})
             else:
                 return JsonResponse({'status': 'error', 'message': 'Nenhum endereço encontrado'})
@@ -101,8 +101,8 @@ def ponto_view(request):
 
 login_required(login_url='Login')
 def ListarPontos(request):
-    model = PontoEntrada.objects.all()
-    FiltersPontos= FilterFaltas(request.GET, queryset= model)
+    model = PontoEntrada.objects.select_related('usuario__usuario')
+    FiltersPontos= FiltersPontoEntrada(request.GET, queryset= model)
     if FiltersPontos.is_valid():
         queryset = FiltersPontos.qs
     else:
@@ -136,11 +136,11 @@ def receive_location_saida(request):
             geocode_url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&language=pt-BR&key={GOOGLE_MAPS_API_KEY}'
             response = requests.get(geocode_url)
             result = response.json()
-
+            funcionario = get_object_or_404(Funcionarios, usuario=request.user)
             if result.get('status') == 'OK':
                 # Obtenha o endereço formatado
                 address = result['results'][0]['formatted_address']
-                model = PontoSaida.objects.create(endereco=address, data=datetime.datetime.now(), horario=timezone.localtime(), usuario=request.user)
+                model = PontoSaida.objects.create(endereco=address, data=datetime.datetime.now(), horario=timezone.localtime(), usuario=funcionario)
                 return JsonResponse({'status': 'success'})
             else:
                 return JsonResponse({'status': 'error', 'message': 'Nenhum endereço encontrado'})
@@ -160,6 +160,75 @@ def ponto_view_saida(request):
     return render(request, 'area-funcionarios/registrar_ponto_saida.html', context)
 
 def listar_meuspontos_entrada(request):
-    entrada = PontoEntrada.objects.filter(usuario=request.user)
-    context = {'entrada': entrada}
+    funcionario = get_object_or_404(Funcionarios, usuario=request.user)
+
+    ponto_entrada_filter = PontoEntradaFilter(request.GET, queryset=PontoEntrada.objects.filter(usuario=funcionario))
+    ponto_saida_filter = PontoSaidaFilter(request.GET, queryset=PontoSaida.objects.filter(usuario=funcionario))
+
+    pontos = []
+    for ponto in ponto_entrada_filter.qs:
+        pontos.append({'ponto': ponto, 'tipo': 'Entrada'})
+    for ponto in ponto_saida_filter.qs:
+        pontos.append({'ponto': ponto, 'tipo': 'Saída'})
+
+    context = {
+        'pontos': pontos,
+        'ponto_entrada_filter': ponto_entrada_filter,
+        'ponto_saida_filter': ponto_saida_filter,
+    }
     return render(request, 'area-funcionarios/listar_meuspontos_entrada.html', context)
+
+login_required(login_url='Login')
+def ListarSaida(request):
+    model = PontoSaida.objects.select_related('usuario__usuario')
+    FiltersPontos= FiltersPontoSaida(request.GET, queryset= model)
+    if FiltersPontos.is_valid():
+        queryset = FiltersPontos.qs
+    else:
+        queryset = model
+    PontosPagination = Paginator(queryset, 6)
+    page = request.GET.get('page')
+    PaginarPontos = PontosPagination.get_page(page)
+    context = {'PaginarPontos': PaginarPontos, 'FiltersPontos': FiltersPontos }
+    return render(request, 'pontos/listarPontosSaida.html', context= context)
+
+def Deletar_pontoSaida(request, id):
+    model = PontoSaida.objects.get(id=id)
+    model.delete()
+    aviso = 'Ponto deletado com sucesso.'
+    messages.success(request, aviso)
+    return redirect('ListarSaida')
+
+@login_required(login_url='Login')
+def CadastroAtrasos(request):
+    if request.method == 'GET':
+        atrasos = AtrasosForms()
+        context = {
+            'AtrasosForms': atrasos
+        }
+        return render(request, 'atrasos/cadastroatraso.html', context)
+    if request.method == 'POST':
+        atraso = AtrasosForms(request.POST)
+        context = {
+            'AtrasosForms': atraso
+        }
+        if atraso.is_valid():
+            atraso.save()
+            sucesso = f'Você cadastrou um atraso para o funcionário'
+            messages.success(request,sucesso)
+            return redirect('ControleAtrasos')
+    return render(request, 'atrasos/atrasos.html')
+
+@login_required(login_url='Login')
+def ControleAtrasos(request):
+    model = Atrasos.objects.select_related('funcionarios__unidade').all()
+    atrasoFilter = AtrasosFilter(request.GET, queryset= model)
+    if atrasoFilter.is_valid():
+        queryset = atrasoFilter.qs
+    else:
+        queryset = model
+    AtrasosPaginator = Paginator(queryset, 6)
+    page = request.GET.get('page')
+    AtrasosPaginator = AtrasosPaginator.get_page(page)
+    context = {'AtrasosPaginator': AtrasosPaginator, 'AtrasosFilter': atrasoFilter }
+    return render(request, 'atrasos/atrasos.html', context= context)

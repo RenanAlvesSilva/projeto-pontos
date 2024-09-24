@@ -1,5 +1,5 @@
 .filters{
-    width: 100%;
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@
     width: 150px;
 }
 .filter-data{
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;

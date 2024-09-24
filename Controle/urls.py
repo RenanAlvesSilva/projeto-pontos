@@ -11,5 +11,10 @@ urlpatterns = [
    path('deletar-ponto/<int:id>', Deletar_ponto, name='deletar_ponto'),
    path('send-location-out/', receive_location_saida, name='api/send-location-out'),
    path('registrar-ponto-saida', ponto_view_saida, name='ponto_saida'),
-   path('listar-meus-pontos', listar_meuspontos_entrada, name='listar_meuspontos_entrada')
+   path('listar-meus-pontos', listar_meuspontos_entrada, name='listar_meuspontos_entrada'),
+   path('listar-pontos-saida', ListarSaida, name='ListarSaida'),
+   path('Deletar-ponto-saida/<int:id>', Deletar_pontoSaida, name='Deletar_PontoSaida'),
+   path('cadastrar-atrasos', CadastroAtrasos, name='CadastroAtrasos'),
+   path('atrasos', ControleAtrasos, name="ControleAtrasos"),
+   
 ]

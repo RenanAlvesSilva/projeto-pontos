@@ -5,10 +5,12 @@
 
 <div class="container w-100 h-100 d-flex align-items-center justify-content-center">
     <div class="container-forms w-100 d-flex justify-content-center shadow">
-        <form class="w-100 p-3" action="{% url "CadastroFaltas" %}" method="post">{% csrf_token %}
+        <form class="w-100 p-3" action="{% url "CadastroAtrasos" %}" method="post">{% csrf_token %}
             <div class="content-forms d-flex flex-column">
-                <div class="d-flex justify-content-center">
-                   {{FaltaForms.as_p}}
+                <div class="d-flex justify-content-center w-100">
+                    <div>
+                      {{AtrasosForms.as_div}}
+                   </div>
                 </div>
                 <button class="btn btn-primary"  type="submit">Cadastrar</button>
             </div>
