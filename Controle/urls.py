@@ -16,5 +16,6 @@ urlpatterns = [
    path('Deletar-ponto-saida/<int:id>', Deletar_pontoSaida, name='Deletar_PontoSaida'),
    path('cadastrar-atrasos', CadastroAtrasos, name='CadastroAtrasos'),
    path('atrasos', ControleAtrasos, name="ControleAtrasos"),
+   path('deletr-atraso/<int:id>', Deletar_Atrsos, name="DeletarAtrasos"),
    
 ]

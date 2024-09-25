@@ -12,6 +12,7 @@ import json
 import requests
 from django.utils import timezone
 import datetime
+from decouple import config
 
 
 
@@ -57,7 +58,7 @@ def DeletarFaltas(request, id):
     return redirect(ControleFaltas)
 
 # Chave da minha API Google
-GOOGLE_MAPS_API_KEY = 'AIzaSyCpgtfvqlPmspg9L7zPzme3cXwIvTdDFdo'
+GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY')
 
 @csrf_exempt
 def receive_location(request):
@@ -232,3 +233,10 @@ def ControleAtrasos(request):
     AtrasosPaginator = AtrasosPaginator.get_page(page)
     context = {'AtrasosPaginator': AtrasosPaginator, 'AtrasosFilter': atrasoFilter }
     return render(request, 'atrasos/atrasos.html', context= context)
+
+def Deletar_Atrsos(request, id):
+    model = Atrasos.objects.get(id=id)
+    model.delete()
+    aviso = 'Atraso deletado com sucesso.'
+    messages.success(request, aviso)
+    return redirect('ControleAtrasos')

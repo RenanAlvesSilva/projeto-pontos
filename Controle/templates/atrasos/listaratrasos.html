@@ -14,7 +14,7 @@
             <td class="text-center">{{model.funcionarios.unidade.name_unidade}}</td>
             <td class="text-center">{{model.converter_atrasos}}</td>
             <td class="text-center">{{model.data}}</td>
-            <td><a href="#"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
+            <td><a href="{% url "DeletarAtrasos" model.id %}"><i class="far fa-trash-alt" style="color: #f00505;"></i></a></td>
         </tr>
         {% empty %}
         <p class="text-danger">Não há dados a serem exibidos</p>
