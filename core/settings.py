@@ -103,7 +103,7 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 br_formats.TIME_FORMAT = 'H:i:s'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gerenciamento-rio2parking.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app/']
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
