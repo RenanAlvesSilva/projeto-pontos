@@ -103,12 +103,13 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 br_formats.TIME_FORMAT = 'H:i:s'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gerenciamento-rio2parking.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app/']
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR,'staticfiles')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
