@@ -40,6 +40,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR , 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,13 +105,14 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 br_formats.TIME_FORMAT = 'H:i:s'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app',
+'https://localhost:8000']
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR,'static')
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
