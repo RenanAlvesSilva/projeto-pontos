@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 DATABASE_URL = config('DATABASE_URL')
-DEBUG = config('DEBUG', default = False, cast= bool)
+DEBUG = config('DEBUG', default = True, cast= bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -104,7 +104,8 @@ br_formats.DATE_FORMAT = 'd/m/Y'
 br_formats.TIME_FORMAT = 'H:i:s'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app',
+'https://localhost:8000']
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
