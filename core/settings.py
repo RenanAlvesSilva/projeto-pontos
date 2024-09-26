@@ -107,9 +107,9 @@ CSRF_TRUSTED_ORIGINS = ['https://gerenciamentos-rio2parking.up.railway.app/']
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = [
-    os.path.join(BASE_DIR,'staticfiles')
+    os.path.join(BASE_DIR,'static')
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
