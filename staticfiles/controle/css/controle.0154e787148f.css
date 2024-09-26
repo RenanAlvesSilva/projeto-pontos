@@ -1,0 +1,28 @@
+.filters{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-select{
+    width: 300px;
+}
+.form-control{
+    width: 150px;
+}
+.filter-data{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.label-data{
+    text-align: center;
+}
+#btn-filter{
+    width: 100px;
+    align-items: center;
+}
