@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.cards{
+    height: 150px;
+    width: 300px;
+    margin: 0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-faltas:hover{
+    background-color: #f02304;
+}
+.card-funcionario:hover{
+    background-color: #0427f0;
+}
+.card-atrasos:hover{
+    background-color: #ff8801;
+}
+.card-atestados:hover{
+    background-color: #1cdf66;
+}
+.card-avisos:hover{
+    background-color: #0e4f6b;
+}
+.card-advertencias:hover{
+    background-color: #b6b319;
+}
+body{
+    display: grid;
+    grid-template-areas: 'l r' 'l r ';
+    grid-template-columns: 0fr 4fr;
+    grid-template-rows: 4fr 4fr;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: #e2e2e2;
+    gap: 30px;
+}
+.cards-manager{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    margin-right: 30px;
+    gap: 10px;
+    justify-content: space-around;
+    grid-area: r;
+}
+.card-funcionario{
+    background-color: #0361f5;
+    color: #ffff;
+    text-align: center;
+}
+.card-faltas{
+    background-color: #ff4122;
+    color: #ffff;
+}
+.card-atrasos{
+    background-color: #ffa108;
+    color: #ffff;
+}
+.card-atestados{
+    background-color: #03f963;
+    color: #ffff;
+}
+.card-avisos{
+    background-color: #14668a;
+    color: #ffff;
+}
+.card-advertencias{
+    background-color: #c0be34;
+    color: #ffff;
+}
+.btn-close{
+    background-color: #ffff;
+}
+#menu-showing:hover{
+    cursor: pointer;
+}
+
+.navegation{
+    grid-area: l;
+}
+
+
+
+
+
+@media (width <= 768px){
+    #sidebar{
+        height: 100dvh;
+    }
+    #side-content{
+        z-index: 1;
+    }
+    header{
+        height: 100dvh;
+    }
+    main{
+        overflow-y: auto;
+    }
+    body{
+        grid-template-columns: 0fr 3fr;
+    }
+    section{
+        padding-right: 30px;
+    }
+}
+
