@@ -27,6 +27,7 @@ DJANGO_APPS = [
 #APS DE TERCEIROS
 THIRD_PARTY_APPS = [
     'django_filters',
+    'whitenoise.runserver_nostatic',
 ]
 
 #Meus Apps
@@ -116,7 +117,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 WHITENOISE_MAX_AGE = 31536000 
-
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'Login'
 
