@@ -107,7 +107,7 @@ br_formats.TIME_FORMAT = 'H:i:s'
 CSRF_TRUSTED_ORIGINS = ['https://gerenciamento-rio2parking.up.railway.app',
 'https://localhost:8000']
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR,'static')
 ]
