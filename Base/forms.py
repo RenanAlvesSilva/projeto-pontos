@@ -12,3 +12,8 @@ class UserForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite sua Senha'}),
         }
 
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['username'].help_text = ''
+            self.fields['password'].help_text = ''
+
