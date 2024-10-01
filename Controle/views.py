@@ -37,7 +37,7 @@ def CadastroFaltas(request):
         context = {
             'FaltaForms': Falta
         }
-        return render(request, 'faltas/cadastroFaltas.html', context)
+        return render(request, 'faltas/cadastrofaltas.html', context)
     if request.method == 'POST':
         Falta = FaltasForms(request.POST)
         context = {
