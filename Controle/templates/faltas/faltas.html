@@ -8,7 +8,7 @@
     {% include "avisos/_aviso.html" %}
     <div class="new-search d-flex align-items-center flex-column gap-2 h-100 w-100">
         <a data-bs-toggle="modal" data-bs-target="#cadastrar-faltas" href="#" class="btn btn-outline-primary"
-        hx-get="{% url "CadastroFaltas" %}" hx-target="#cadastrofaltas" hx-swap="innerHTML">Cadastrar Falta <i id="add" class="fas fa-user-plus" style="color: #f5faf4;"></i></a>
+        hx-get="{% url 'CadastroFaltas' %}" hx-target="#cadastrofaltas" hx-swap="innerHTML">Cadastrar Falta <i id="add" class="fas fa-user-plus" style="color: #f5faf4;"></i></a>
         
         <form method="get" class="d-flex row w-100 gap-1 justify-content-center">
             <div class="d-flex column justify-content-center align-items-center" >
