@@ -121,7 +121,7 @@ def Deletar_ponto(request, id):
     messages.success(request, aviso)
     return redirect('ListarPontos')
 
-
+login_required(login_url='Login')
 @csrf_exempt
 def receive_location_saida(request):
     if request.method == 'POST':
@@ -150,7 +150,8 @@ def receive_location_saida(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Método de requisição inválido'}, status=405)
-
+    
+login_required(login_url='Login')
 def ponto_view_saida(request):
     address = request.GET.get('address', None)
     erro = request.GET.get('error', None)
@@ -159,7 +160,8 @@ def ponto_view_saida(request):
         'address': address, 'error': erro, 'status': status,
     }
     return render(request, 'area-funcionarios/registrar_ponto_saida.html', context)
-
+    
+login_required(login_url='Login')
 def listar_meuspontos_entrada(request):
     funcionario = get_object_or_404(Funcionarios, usuario=request.user.id)
 
@@ -192,7 +194,8 @@ def ListarSaida(request):
     PaginarPontos = PontosPagination.get_page(page)
     context = {'PaginarPontos': PaginarPontos, 'FiltersPontos': FiltersPontos }
     return render(request, 'pontos/listarPontosSaida.html', context= context)
-
+    
+login_required(login_url='Login')
 def Deletar_pontoSaida(request, id):
     model = PontoSaida.objects.get(id=id)
     model.delete()
@@ -233,7 +236,8 @@ def ControleAtrasos(request):
     AtrasosPaginator = AtrasosPaginator.get_page(page)
     context = {'AtrasosPaginator': AtrasosPaginator, 'AtrasosFilter': atrasoFilter }
     return render(request, 'atrasos/atrasos.html', context= context)
-
+    
+login_required(login_url='Login')
 def Deletar_Atrsos(request, id):
     model = Atrasos.objects.get(id=id)
     model.delete()
