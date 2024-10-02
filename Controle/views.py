@@ -161,7 +161,7 @@ def ponto_view_saida(request):
     return render(request, 'area-funcionarios/registrar_ponto_saida.html', context)
 
 def listar_meuspontos_entrada(request):
-    funcionario = get_object_or_404(Funcionarios, usuario=request.user)
+    funcionario = get_object_or_404(Funcionarios, usuario=request.user.id)
 
     ponto_entrada_filter = PontoEntradaFilter(request.GET, queryset=PontoEntrada.objects.filter(usuario=funcionario))
     ponto_saida_filter = PontoSaidaFilter(request.GET, queryset=PontoSaida.objects.filter(usuario=funcionario))
