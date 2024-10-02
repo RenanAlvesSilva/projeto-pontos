@@ -75,7 +75,7 @@ def receive_location(request):
             geocode_url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&language=pt-BR&key={GOOGLE_MAPS_API_KEY}'
             response = requests.get(geocode_url)
             result = response.json()
-            funcionario = get_object_or_404(Funcionarios, usuario=request.user)
+            funcionario = get_object_or_404(Funcionarios, usuario=request.user.id)
             if result.get('status') == 'OK':
                 # Obtenha o endereço formatado
                 address = result['results'][0]['formatted_address']
@@ -137,7 +137,7 @@ def receive_location_saida(request):
             geocode_url = f'https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&language=pt-BR&key={GOOGLE_MAPS_API_KEY}'
             response = requests.get(geocode_url)
             result = response.json()
-            funcionario = get_object_or_404(Funcionarios, usuario=request.user)
+            funcionario = get_object_or_404(Funcionarios, usuario=request.user.id)
             if result.get('status') == 'OK':
                 # Obtenha o endereço formatado
                 address = result['results'][0]['formatted_address']
